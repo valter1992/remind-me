@@ -2,9 +2,12 @@
 
 ## Current State
 
-После задачи 1 (Напоминания, ядро) в проекте есть: работающий aiogram-бот, модели пользователя
-и записей, async-хранилище (SQLAlchemy/aiosqlite), планировщик. Заметок нет. Эта задача
-надстраивает новый тип записи «заметка» поверх существующего фундамента.
+На момент написания задача 1 (Напоминания, ядро) не реализована (`goga schema` → `[]`); задача 1
+является жёстким предком. Ниже — ожидаемое состояние после её завершения.
+
+После задачи 1 в проекте есть: работающий aiogram-бот, модели пользователя и записей,
+async-хранилище (SQLAlchemy/aiosqlite), планировщик. Заметок нет. Эта задача надстраивает
+новый тип записи «заметка» поверх существующего фундамента.
 
 ## Description
 
@@ -19,7 +22,8 @@
 - ORM-модель + репозиторий заметок (async SQLAlchemy)
 - Сценарии бота:
   - сохранить заметку (текст)
-  - просмотреть список заметок (текущего пользователя)
+  - просмотреть список заметок (текущего пользователя) — последние N (10) на странице,
+    пагинация inline-кнопками «вперёд/назад»
   - удалить заметку
 
 **Out of scope:**
@@ -30,22 +34,26 @@
 ## Acceptance Criteria
 
 - Команда сохранения создаёт заметку, привязанную к `user_id`
-- Список показывает только заметки текущего пользователя
+- Список показывает только заметки текущего пользователя; постранично (по 10) с пагинацией
+  inline-кнопками «вперёд/назад»
 - Заметку можно удалить
 - `ruff check` чист; репозиторий покрыт юнит-тестами; `pytest tests/ -x` зелёный
 
 ## Stack
 
-- **Frameworks:** aiogram 3.x
-- **Libraries:** pydantic v2, SQLAlchemy 2.x, aiosqlite, structlog
+- **Frameworks:** aiogram 3.x (`>=3.4`)
+- **Libraries:** pydantic v2 (`>=2.6`), SQLAlchemy 2.x (`>=2.0`), aiosqlite (`>=0.20`),
+  structlog (`>=24.1`)
 - **Infrastructure:** SQLite
 
 ## External Dependencies
 
-| Component | Usage file | Status |
-|-----------|------------|--------|
-| aiogram | `.goga/usages/cooks/aiogram.md` | existing |
-| SQLAlchemy (async) | `.goga/usages/cooks/sqlalchemy.md` | existing |
+| Component                  | Usage file                          | Status   |
+|----------------------------|-------------------------------------|----------|
+| aiogram                    | `.goga/usages/cooks/aiogram.md`     | existing |
+| SQLAlchemy (async)         | `.goga/usages/cooks/sqlalchemy.md`  | existing |
+| aiosqlite                  | `.goga/usages/cooks/sqlalchemy.md`  | existing |
+| pydantic / structlog       | `.goga/usages/conventions.md`       | existing |
 
 ## Risks and Constraints
 
